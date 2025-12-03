@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Dashboard - Health Assistant</title>
+  
+  <!-- Reuse existing CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <style>
+    /* Admin specific overrides */
+    body { background: #f0f2f5; }
+    .sidebar { min-height: 100vh; background: #fff; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
+    .admin-card { background: white; border-radius: 12px; padding: 20px; border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .bg-blue { background: #e3f2fd; color: #0d47a1; }
+  </style>
+</head>
+<body>
+
+  <!-- Admin Login Overlay -->
+  <div id="adminLoginOverlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:9999; display:flex; align-items:center; justify-content:center;">
+    <div class="card p-5" style="width:400px; text-align:center;">
+      <i class="fas fa-user-md fa-3x mb-3 text-primary"></i>
+      <h3>Doctor Login</h3>
+      <p class="text-muted">Enter access code to view records</p>
+      <input type="password" id="adminCode" class="form-control mb-3" placeholder="Enter Access Code (1234)">
+      <button onclick="checkAdmin()" class="btn btn-primary w-100">Access Dashboard</button>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-2 sidebar p-4 d-none d-md-block">
+        <h5 class="text-primary mb-4"><i class="fas fa-heartbeat"></i> AdminPanel</h5>
+        <div class="nav flex-column nav-pills">
+          <button class="nav-link active mb-2" onclick="showSection('appointments')">
+  <i class="fas fa-calendar-check me-2"></i> Appointments
+</button>
+
+          <button class="nav-link mb-2" onclick="showSection('records')">
+  <i class="fas fa-file-medical me-2"></i> Patient Records
+</button>
+
+          <button class="nav-link mb-2" onclick="showSection('medications')">
+  <i class="fas fa-pills me-2"></i> Medications
+</button>
+          <button class="btn btn-danger mt-5" onclick="location.href='index.html'"><i class="fas fa-sign-out-alt me-2"></i> Logout</button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-10 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3>Doctor Dashboard</h3>
+          <button class="btn btn-outline-primary btn-sm" onclick="loadAllData()"><i class="fas fa-sync"></i> Refresh Data</button>
+        </div>
+
+        <!-- Appointments Section -->
+        <div id="sec_appointments" class="admin-section">
+          <div class="admin-card">
+            <h5>Upcoming Appointments</h5>
+            <div class="table-responsive">
+              <table class="table table-hover mt-3">
+                <thead class="table-light">
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Age</th>
+                    <th>Doctor Assigned</th>
+                    <th>Date & Time</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="adminApptTable">
+                  <!-- JS will populate this -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Records Section -->
+        <div id="sec_records" class="admin-section" style="display:none;">
+          <div class="row" id="adminRecordsGrid">
+            <!-- JS will populate cards here -->
+          </div>
+        </div>
+
+        <!-- Medications Section -->
+        <div id="sec_medications" class="admin-section" style="display:none;">
+          <div class="admin-card">
+            <h5>Patient Medication Logs</h5>
+            <div class="table-responsive">
+              <table class="table table-hover mt-3">
+                <thead class="table-light">
+                  <tr>
+                    <th>Patient</th>
+                    <th>Medicine</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Duration</th>
+                  </tr>
+                </thead>
+                <tbody id="adminMedTable">
+                  <!-- JS will populate this -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="admin_script.js"></script>
+
+</body>
+</html>
