@@ -1,4 +1,4 @@
-const API_URL = "https://health-backend-2-zs46.onrender.com"; // Ensure this matches your flask URL
+const API_URL = "https://health-backend-44r7.onrender.com"; // Ensure this matches your flask URL
 
 // Simple security check for demonstration
 function checkAdmin() {
@@ -159,6 +159,7 @@ async function completeAppointment(id) {
         console.error(err);
     }
 }
+
 
 
 
